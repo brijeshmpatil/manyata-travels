@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import type { ItineraryDay } from "@/data/packages";
 
@@ -10,6 +10,9 @@ interface ItineraryTimelineProps {
 
 export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastDotRef = useRef<HTMLDivElement>(null);
+  const [lineHeight, setLineHeight] = useState(0);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 60%", "end 60%"],
@@ -20,7 +23,6 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const count = itinerary.length;
-    // Calculate which milestone the progress line has reached
     const idx = Math.floor(v * count);
     const clamped = Math.min(idx, count - 1);
     if (clamped > activeIndex) {
@@ -28,22 +30,45 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
     }
   });
 
+  // Dynamically calculate line height: from first dot center to last dot center
+  const updateLineHeight = useCallback(() => {
+    if (!containerRef.current || !lastDotRef.current) return;
+    const containerTop = containerRef.current.getBoundingClientRect().top;
+    const lastDotRect = lastDotRef.current.getBoundingClientRect();
+    const lastDotCenter = lastDotRect.top + lastDotRect.height / 2 - containerTop;
+    // First dot center is at top: 40px (pt-5=20px + half of 40px circle = 20px)
+    const firstDotCenter = 40;
+    setLineHeight(lastDotCenter - firstDotCenter);
+  }, []);
+
+  useEffect(() => {
+    updateLineHeight();
+    window.addEventListener("resize", updateLineHeight);
+    return () => window.removeEventListener("resize", updateLineHeight);
+  }, [updateLineHeight]);
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
 
       <div ref={containerRef} className="relative">
-        {/* Track line — static gray */}
-        <div
-          className="absolute w-[2px] bg-primary/12 left-[19px] top-[40px] bottom-[250px] sm:bottom-[150px]"
-        />
-        {/* Progress line — scroll-driven fill */}
-        <motion.div
-          className="absolute w-[2px] bg-primary origin-top left-[19px] top-[40px] bottom-[250px] sm:bottom-[150px]"
-          style={{
-            scaleY: useTransform(scrollYProgress, [0, 1], [0, 1]),
-          }}
-        />
+        {/* Track line — dynamic height from first to last dot */}
+        {lineHeight > 0 && (
+          <>
+            <div
+              className="absolute w-[2px] bg-primary/12 left-[19px]"
+              style={{ top: "40px", height: `${lineHeight}px` }}
+            />
+            <motion.div
+              className="absolute w-[2px] bg-primary origin-top left-[19px]"
+              style={{
+                top: "40px",
+                height: `${lineHeight}px`,
+                scaleY: useTransform(scrollYProgress, [0, 1], [0, 1]),
+              }}
+            />
+          </>
+        )}
 
         {/* Milestones */}
         <div className="flex flex-col gap-6">
@@ -53,6 +78,8 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
               day={day}
               index={index}
               isActive={index <= activeIndex}
+              isLast={index === itinerary.length - 1}
+              lastDotRef={index === itinerary.length - 1 ? lastDotRef : undefined}
             />
           ))}
         </div>
@@ -65,10 +92,14 @@ function Milestone({
   day,
   index,
   isActive,
+  isLast,
+  lastDotRef,
 }: {
   day: ItineraryDay;
   index: number;
   isActive: boolean;
+  isLast: boolean;
+  lastDotRef?: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
     <motion.div
@@ -81,6 +112,7 @@ function Milestone({
       {/* Circle column */}
       <div className="flex flex-col items-center shrink-0 pt-5" style={{ width: "40px" }}>
         <div
+          ref={isLast ? lastDotRef : undefined}
           className={`w-10 h-10 rounded-full border-[3px] flex items-center justify-center z-10 transition-all duration-500 ${
             isActive
               ? "bg-primary border-primary shadow-md"
