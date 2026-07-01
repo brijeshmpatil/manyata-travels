@@ -5,6 +5,12 @@ export interface ItineraryDay {
   stay: string;
 }
 
+export interface PricingTier {
+  label: string;
+  price: number;
+  note: string;
+}
+
 export interface TravelPackage {
   slug: string;
   title: string;
@@ -14,6 +20,8 @@ export interface TravelPackage {
   nights: number;
   price: number;
   priceNote: string;
+  pricingTiers?: PricingTier[];
+  pdfPath?: string;
   destinations: string[];
   heroImage: string;
   cardImage: string;
@@ -35,6 +43,7 @@ export const packages: TravelPackage[] = [
     nights: 5,
     price: 32600,
     priceNote: "Excluding Flights",
+    pdfPath: "/itineraries/ladakh-leh-2026.pdf",
     destinations: ["Leh", "Khardung La", "Nubra Valley", "Pangong Lake", "Tso Moriri"],
     heroImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1920&q=80",
     cardImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800&q=80",
@@ -179,7 +188,13 @@ export const packages: TravelPackage[] = [
     days: 5,
     nights: 4,
     price: 27600,
-    priceNote: "Per Person (incl. Two-way Train 3AC)",
+    priceNote: "Starting from (incl. Two-way Train 3AC)",
+    pdfPath: "/itineraries/jagannath-puri-2026.pdf",
+    pricingTiers: [
+      { label: "Two-way Train (3AC)", price: 27600, note: "Per Person" },
+      { label: "Onwards Train (3AC) + Return Flight", price: 31600, note: "Per Person" },
+      { label: "Two-way Flight from Hubli", price: 39600, note: "Per Person" },
+    ],
     destinations: ["Bhubaneshwar", "Puri", "Konark", "Chilika Lake"],
     heroImage: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1920&q=80",
     cardImage: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80",

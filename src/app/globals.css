@@ -59,6 +59,57 @@ button {
   transition: all 0.3s ease;
 }
 
+/* Print styles — for PDF download */
+@media print {
+  /* Hide non-printable elements */
+  nav, footer,
+  .whatsapp-btn, .scroll-progress,
+  .social-proof-toast, .enquiry-popup,
+  [aria-label="Chat on WhatsApp"],
+  [aria-label="Toggle menu"],
+  button[aria-label="Open Next.js Dev Tools"] {
+    display: none !important;
+  }
+
+  /* Reset background */
+  body {
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  html {
+    overflow: visible !important;
+  }
+
+  /* Show all content */
+  * {
+    overflow: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Page breaks */
+  section {
+    break-inside: avoid;
+  }
+
+  /* Print header */
+  .print-header {
+    display: flex !important;
+  }
+
+  /* Hide download button in print */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure backgrounds print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
 /* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

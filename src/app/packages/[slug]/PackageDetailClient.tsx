@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, MapPin, Hotel, Check, X, MessageCircle } from "lucide-react";
+import { Clock, MapPin, Hotel, Check, X, MessageCircle, Download } from "lucide-react";
 import type { TravelPackage } from "@/data/packages";
 import ScrollAnimation from "@/components/ScrollAnimation";
 import ItineraryTimeline from "@/components/ItineraryTimeline";
@@ -14,6 +14,23 @@ interface PackageDetailClientProps {
 export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailClientProps) {
   return (
     <>
+      {/* Print-only header — visible only in PDF */}
+      <div className="print-header hidden items-center justify-between px-8 py-6 border-b-2 border-primary">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+            <span className="text-white font-bold text-lg">M</span>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-primary">Manyata Travels</h2>
+            <p className="text-xs text-gray uppercase tracking-widest">The Royal & Loyal Journey</p>
+          </div>
+        </div>
+        <div className="text-right text-sm text-gray">
+          <p className="font-semibold text-dark">+91 9742026462</p>
+          <p>manyatatravels1@gmail.com</p>
+        </div>
+      </div>
+
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px] flex items-end">
         <div
@@ -131,21 +148,58 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
               {/* Price Card */}
               <ScrollAnimation direction="right">
                 <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-light/50">
-                  <p className="text-gray text-sm uppercase tracking-wider mb-1 font-[var(--font-body)]">
-                    Per Person
-                  </p>
-                  <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-4xl font-bold text-primary">
-                      ₹{pkg.price.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                  <p className="text-gray text-xs mb-6 font-[var(--font-body)]">{pkg.priceNote}</p>
+                  {/* Pricing Tiers */}
+                  {pkg.pricingTiers && pkg.pricingTiers.length > 0 ? (
+                    <div className="mb-6">
+                      <p className="text-gray text-xs uppercase tracking-wider mb-3 font-[var(--font-body)]">
+                        Pricing Options
+                      </p>
+                      <div className="space-y-3">
+                        {pkg.pricingTiers.map((tier, i) => (
+                          <div
+                            key={tier.label}
+                            className={`p-3 rounded-xl border transition-colors ${
+                              i === 0
+                                ? "border-primary bg-primary/5"
+                                : "border-gray-light/50 bg-white"
+                            }`}
+                          >
+                            <div className="flex items-baseline justify-between gap-2">
+                              <span className="text-2xl font-bold text-primary">
+                                ₹{tier.price.toLocaleString("en-IN")}
+                              </span>
+                              {i === 0 && (
+                                <span className="text-[10px] font-bold uppercase bg-primary text-white px-2 py-0.5 rounded-full font-[var(--font-body)]">
+                                  Best Value
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-gray text-xs mt-1 font-[var(--font-body)]">
+                              {tier.label} &middot; {tier.note}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mb-6">
+                      <p className="text-gray text-sm uppercase tracking-wider mb-1 font-[var(--font-body)]">
+                        Per Person
+                      </p>
+                      <div className="flex items-baseline gap-1 mb-1">
+                        <span className="text-4xl font-bold text-primary">
+                          ₹{pkg.price.toLocaleString("en-IN")}
+                        </span>
+                      </div>
+                      <p className="text-gray text-xs font-[var(--font-body)]">{pkg.priceNote}</p>
+                    </div>
+                  )}
 
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#20BD5A] text-white py-4 rounded-xl text-base font-semibold transition-colors mb-3 font-[var(--font-body)]"
+                    className="no-print flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#20BD5A] text-white py-4 rounded-xl text-base font-semibold transition-colors mb-3 font-[var(--font-body)]"
                   >
                     <MessageCircle className="w-5 h-5" />
                     Enquire on WhatsApp
@@ -153,10 +207,19 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
 
                   <a
                     href={`tel:+919742026462`}
-                    className="flex items-center justify-center gap-2 w-full border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-xl text-base font-semibold transition-all font-[var(--font-body)]"
+                    className="no-print flex items-center justify-center gap-2 w-full border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-xl text-base font-semibold transition-all mb-3 font-[var(--font-body)]"
                   >
                     Call to Book
                   </a>
+
+                  {/* Download PDF — prints current page as PDF */}
+                  <button
+                    onClick={() => window.print()}
+                    className="no-print flex items-center justify-center gap-2 w-full bg-cream hover:bg-cream-dark text-primary py-4 rounded-xl text-base font-semibold transition-colors border border-primary/20 font-[var(--font-body)]"
+                  >
+                    <Download className="w-5 h-5" />
+                    Download Itinerary PDF
+                  </button>
                 </div>
               </ScrollAnimation>
 
