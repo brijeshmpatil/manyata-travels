@@ -35,16 +35,12 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
       <div ref={containerRef} className="relative">
         {/* Track line — static gray */}
         <div
-          className="absolute w-[2px] bg-primary/12"
-          style={{ left: "19px", top: "40px", bottom: "150px" }}
+          className="absolute w-[2px] bg-primary/12 left-[19px] top-[40px] bottom-[250px] sm:bottom-[150px]"
         />
         {/* Progress line — scroll-driven fill */}
         <motion.div
-          className="absolute w-[2px] bg-primary origin-top"
+          className="absolute w-[2px] bg-primary origin-top left-[19px] top-[40px] bottom-[250px] sm:bottom-[150px]"
           style={{
-            left: "19px",
-            top: "40px",
-            bottom: "150px",
             scaleY: useTransform(scrollYProgress, [0, 1], [0, 1]),
           }}
         />
