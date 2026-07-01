@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, Mountain } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { siteConfig } from "@/data/config";
+import Logo from "./Logo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -44,11 +45,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <Mountain
-              className={`w-8 h-8 transition-colors ${
-                isScrolled ? "text-primary" : "text-white"
-              }`}
+          <Link href="/" className="flex items-center gap-3 group">
+            <Logo
+              size="sm"
+              color={isScrolled ? "dark" : "light"}
             />
             <div>
               <h1

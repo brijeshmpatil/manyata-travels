@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Mountain, MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { siteConfig } from "@/data/config";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -9,8 +10,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Mountain className="w-8 h-8 text-accent" />
+            <div className="flex items-center gap-3 mb-4">
+              <Logo size="sm" color="light" />
               <div>
                 <h3 className="text-xl font-bold">{siteConfig.name}</h3>
                 <p className="text-[10px] tracking-[0.2em] uppercase text-accent">
