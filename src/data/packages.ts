@@ -170,6 +170,71 @@ export const packages: TravelPackage[] = [
     ],
     featured: true,
     isSample: true
+  },
+  {
+    slug: "jagannath-puri-2026",
+    title: "Jagannath Puri – Konark",
+    subtitle: "Temples, Beaches & Sacred Odisha",
+    duration: "5 Days / 4 Nights",
+    days: 5,
+    nights: 4,
+    price: 27600,
+    priceNote: "Per Person (incl. Two-way Train 3AC)",
+    destinations: ["Bhubaneshwar", "Puri", "Konark", "Chilika Lake"],
+    heroImage: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1920&q=80",
+    cardImage: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80",
+    highlights: ["Jagannath Temple", "Konark Sun Temple", "Puri Beach", "Chilika Lake Dolphins", "Lingaraj Temple", "Udayagiri Caves"],
+    itinerary: [
+      {
+        day: 1,
+        title: "Bhubaneshwar Arrival",
+        description: "Train from Dharwad/Hubli to Bhubaneshwar. Night journey in train. On arrival at Bhubaneshwar, check into hotel for dinner and overnight stay.",
+        stay: "Bhubaneshwar"
+      },
+      {
+        day: 2,
+        title: "Bhubaneshwar – Puri",
+        description: "After breakfast, explore the architectural marvels of Lingaraj, Rajarani, Mukteswar, and Parsurameswar Temples, followed by a visit to the historic Udayagiri and Khandagiri rock-cut caves dating back to the 2nd century BCE. Proceed to Puri, check into hotel for dinner and overnight stay.",
+        stay: "Puri"
+      },
+      {
+        day: 3,
+        title: "Puri – Konark Excursion",
+        description: "Begin the day with darshan at Jagannath Temple, followed by a visit to Puri Beach. Proceed to Konark Sun Temple via the scenic Marine Drive route and explore the magnificent UNESCO World Heritage Site. Later, visit Chandrabhaga Beach and Ramachandi Temple before returning to Puri. Enjoy leisure time at Puri Beach and explore the local markets. Overnight stay in Puri.",
+        stay: "Puri"
+      },
+      {
+        day: 4,
+        title: "Brahmagiri & Chilika Excursion",
+        description: "After breakfast, proceed to Alarnatha Temple at Brahmagiri for darshan. Continue to Satapada, the gateway to Chilika Lake, and enjoy a boat ride to witness the famous Irrawaddy dolphins and visit Rajhans Island, where the lake meets the Bay of Bengal. After exploring Chilika Lake, depart for Bhubaneshwar. Check into hotel and enjoy the evening at leisure. Overnight stay in Bhubaneshwar.",
+        stay: "Bhubaneshwar"
+      },
+      {
+        day: 5,
+        title: "Farewell & Departure",
+        description: "After breakfast, proceed to Airport for your return flight from Bhubaneshwar to Hubli. It's time to say goodbye to our travel companions. See you all on another memorable tour!",
+        stay: "Departure"
+      }
+    ],
+    inclusions: [
+      "Onwards 3 AC Train ticket and Return economy class air ticket with current airport taxes",
+      "Baggage allowance as per airline policy",
+      "Travel by comfortable A/C Tempo Travellers or Mini Buses or big buses depending on group size",
+      "Accommodation in comfortable hotels on twin-sharing basis (3-Star)",
+      "Morning tea/coffee, breakfast, lunch, dinner and two 1L water bottles per person per day",
+      "Guide and driver tips, hotel and restaurant tips"
+    ],
+    exclusions: [
+      "Auto charges for sightseeing",
+      "Pooja, Abhishek, Special darshan tickets",
+      "Vehicle not at disposal at any of the islands",
+      "Other meals not mentioned, laundry, telephone calls, and incidentals",
+      "Any personal expenses, room service, alcoholic and non-alcoholic beverages",
+      "Any expenses arising due to unforeseen circumstances",
+      "Standard check-in time: 11 AM, check-out: 10 AM"
+    ],
+    featured: true,
+    isSample: false
   }
 ];
 

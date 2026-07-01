@@ -41,5 +41,11 @@ export const destinations: Destination[] = [
     tagline: "The Spiritual Heart of India",
     image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80",
     slug: ""
+  },
+  {
+    name: "Puri",
+    tagline: "Sacred Land of Lord Jagannath",
+    image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80",
+    slug: "jagannath-puri-2026"
   }
 ];

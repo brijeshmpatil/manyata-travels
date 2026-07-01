@@ -55,7 +55,7 @@ export default function Footer() {
               Destinations
             </h4>
             <ul className="space-y-3">
-              {["Ladakh – Leh", "Kashmir", "Manali – Shimla", "Rishikesh", "Jaipur", "Varanasi"].map(
+              {["Ladakh – Leh", "Jagannath Puri – Konark", "Kashmir", "Manali – Shimla", "Rishikesh", "Jaipur", "Varanasi"].map(
                 (dest) => (
                   <li key={dest}>
                     <span className="text-white/70 text-sm">{dest}</span>
