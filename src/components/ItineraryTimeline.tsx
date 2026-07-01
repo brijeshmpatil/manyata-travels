@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useInView, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import type { ItineraryDay } from "@/data/packages";
 
 interface ItineraryTimelineProps {
@@ -12,30 +12,40 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 70%", "end 70%"],
+    offset: ["start 60%", "end 60%"],
   });
 
-  // Clamp progress so line never overshoots past last circle
-  const clampedProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  // Track which milestones the line has reached
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const count = itinerary.length;
+    // Calculate which milestone the progress line has reached
+    const idx = Math.floor(v * count);
+    const clamped = Math.min(idx, count - 1);
+    if (clamped > activeIndex) {
+      setActiveIndex(clamped);
+    }
+  });
 
   return (
     <div>
       <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
 
       <div ref={containerRef} className="relative">
-        {/* Track line — static gray, from first circle center to last circle center */}
+        {/* Track line — static gray */}
         <div
           className="absolute w-[2px] bg-primary/12"
-          style={{ left: "19px", top: "40px", bottom: "calc(0% + 40px)" }}
+          style={{ left: "19px", top: "40px", bottom: "150px" }}
         />
-        {/* Progress line — scroll-driven fill, same start/end as track */}
+        {/* Progress line — scroll-driven fill */}
         <motion.div
           className="absolute w-[2px] bg-primary origin-top"
           style={{
             left: "19px",
             top: "40px",
-            bottom: "calc(0% + 40px)",
-            scaleY: clampedProgress,
+            bottom: "150px",
+            scaleY: useTransform(scrollYProgress, [0, 1], [0, 1]),
           }}
         />
 
@@ -46,6 +56,7 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
               key={day.day}
               day={day}
               index={index}
+              isActive={index <= activeIndex}
             />
           ))}
         </div>
@@ -57,16 +68,14 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
 function Milestone({
   day,
   index,
+  isActive,
 }: {
   day: ItineraryDay;
   index: number;
+  isActive: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-30% 0px -30% 0px" });
-
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -77,14 +86,14 @@ function Milestone({
       <div className="flex flex-col items-center shrink-0 pt-5" style={{ width: "40px" }}>
         <div
           className={`w-10 h-10 rounded-full border-[3px] flex items-center justify-center z-10 transition-all duration-500 ${
-            isInView
+            isActive
               ? "bg-primary border-primary shadow-md"
-              : "bg-white border-primary/30"
+              : "bg-white border-primary/25"
           }`}
         >
           <span
             className={`text-sm font-bold transition-colors duration-500 ${
-              isInView ? "text-white" : "text-primary"
+              isActive ? "text-white" : "text-primary/50"
             }`}
           >
             {day.day}
@@ -93,19 +102,45 @@ function Milestone({
       </div>
 
       {/* Content card */}
-      <div className="flex-1 bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-light/30 hover:shadow-md transition-shadow min-w-0">
+      <div
+        className={`flex-1 rounded-2xl p-5 sm:p-6 border transition-all duration-500 min-w-0 ${
+          isActive
+            ? "bg-white shadow-md border-gray-light/30"
+            : "bg-gray-light/20 shadow-none border-gray-light/20"
+        }`}
+      >
         <div className="flex items-start justify-between gap-3 mb-2">
           <div className="min-w-0">
-            <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 font-[var(--font-body)]">
+            <span
+              className={`inline-block text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2 font-[var(--font-body)] transition-colors duration-500 ${
+                isActive ? "bg-primary/10 text-primary" : "bg-gray-light/50 text-gray"
+              }`}
+            >
               Day {day.day}
             </span>
-            <h3 className="text-base sm:text-lg font-bold text-dark">{day.title}</h3>
+            <h3
+              className={`text-base sm:text-lg font-bold transition-colors duration-500 ${
+                isActive ? "text-dark" : "text-gray"
+              }`}
+            >
+              {day.title}
+            </h3>
           </div>
-          <span className="bg-cream text-primary text-xs px-3 py-1.5 rounded-full shrink-0 font-semibold font-[var(--font-body)] border border-primary/10">
+          <span
+            className={`text-xs px-3 py-1.5 rounded-full shrink-0 font-semibold font-[var(--font-body)] border transition-colors duration-500 ${
+              isActive
+                ? "bg-cream text-primary border-primary/10"
+                : "bg-gray-light/30 text-gray border-gray-light/30"
+            }`}
+          >
             {day.stay}
           </span>
         </div>
-        <p className="text-gray text-sm leading-relaxed font-[var(--font-body)]">
+        <p
+          className={`text-sm leading-relaxed font-[var(--font-body)] transition-colors duration-500 ${
+            isActive ? "text-gray" : "text-gray/50"
+          }`}
+        >
           {day.description}
         </p>
       </div>
