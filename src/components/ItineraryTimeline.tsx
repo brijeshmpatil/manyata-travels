@@ -51,15 +51,15 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
     <div>
       <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
 
-      <div ref={containerRef} className="relative">
+      <div ref={containerRef} className="relative itinerary-container">
         {/* Track line — dynamic height from first to last dot */}
         <div
-          className="absolute w-[2px] bg-primary/12 left-[19px]"
+          className="absolute w-[2px] bg-primary/12 left-[19px] itinerary-track"
           style={{ top: "40px", height: lineHeight > 0 ? `${lineHeight}px` : "0px" }}
         />
         {/* Progress line — scroll-driven fill */}
         <motion.div
-          className="absolute w-[2px] bg-primary origin-top left-[19px]"
+          className="absolute w-[2px] bg-primary origin-top left-[19px] itinerary-progress"
           style={{
             top: "40px",
             height: lineHeight > 0 ? `${lineHeight}px` : "0px",
@@ -68,7 +68,7 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
         />
 
         {/* Milestones */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 itinerary-items">
           {itinerary.map((day, index) => (
             <Milestone
               key={day.day}
@@ -106,8 +106,8 @@ function Milestone({
       transition={{ duration: 0.5, delay: index * 0.05 }}
       className="flex gap-4 sm:gap-5"
     >
-      {/* Circle column */}
-      <div className="flex flex-col items-center shrink-0 pt-5" style={{ width: "40px" }}>
+      {/* Circle column — hidden in print */}
+      <div className="flex flex-col items-center shrink-0 pt-5 itinerary-dot" style={{ width: "40px" }}>
         <div
           ref={isLast ? lastDotRef : undefined}
           className={`w-10 h-10 rounded-full border-[3px] flex items-center justify-center z-10 transition-all duration-500 ${
@@ -128,7 +128,7 @@ function Milestone({
 
       {/* Content card */}
       <div
-        className={`flex-1 rounded-2xl p-5 sm:p-6 border transition-all duration-500 min-w-0 ${
+        className={`flex-1 rounded-2xl p-5 sm:p-6 border transition-all duration-500 min-w-0 itinerary-card ${
           isActive
             ? "bg-white shadow-md border-gray-light/30"
             : "bg-gray-light/20 shadow-none border-gray-light/20"

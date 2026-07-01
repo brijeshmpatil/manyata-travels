@@ -106,7 +106,7 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
             <ItineraryTimeline itinerary={pkg.itinerary} />
 
             {/* Inclusions / Exclusions */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 print-page-break">
               <ScrollAnimation>
                 <div className="bg-green-50 rounded-2xl p-6">
                   <h3 className="text-lg font-bold text-dark mb-4 flex items-center gap-2">

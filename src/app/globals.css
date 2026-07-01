@@ -59,6 +59,12 @@ button {
 
 /* Print styles — for PDF download */
 @media print {
+  /* Page setup */
+  @page {
+    margin: 2cm 1.5cm;
+    size: A4;
+  }
+
   /* Hide non-printable elements */
   nav, footer,
   .whatsapp-btn, .scroll-progress,
@@ -87,44 +93,73 @@ button {
     transform: none !important;
     animation: none !important;
     transition: none !important;
-  }
-
-  /* Print header */
-  .print-header {
-    display: flex !important;
-  }
-
-  /* Ensure backgrounds print */
-  * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* === Page Layout === */
+  /* Print header — show at top */
+  .print-header {
+    display: flex !important;
+    margin-bottom: 20px;
+  }
 
-  /* Hero section — page 1 */
+  /* === Page Breaks === */
+
+  /* Hero — page 1, then break */
   .print-section-hero {
     break-after: page;
+    margin-bottom: 0;
   }
 
-  /* Each print section keeps together */
+  /* Keep each section together */
   .print-section {
     break-inside: avoid;
-    padding-top: 16px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
-  /* Force new page before these sections */
+  /* Force page break before */
   .print-page-break {
     break-before: page;
+    padding-top: 20px;
   }
 
-  /* Itinerary cards — avoid splitting a single day card */
-  .print-card {
+  /* === Itinerary — simple list, no timeline === */
+
+  /* Hide timeline track and progress lines */
+  .itinerary-track,
+  .itinerary-progress {
+    display: none !important;
+  }
+
+  /* Hide timeline circle dots */
+  .itinerary-dot {
+    display: none !important;
+  }
+
+  /* Itinerary container — reset padding */
+  .itinerary-container {
+    padding-left: 0 !important;
+  }
+
+  /* Each day card — clean box with number */
+  .itinerary-card {
     break-inside: avoid;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    box-shadow: none !important;
   }
 
-  /* Single column layout for print (no sidebar) */
+  /* Day items — no gap needed without dots */
+  .itinerary-items {
+    gap: 12px !important;
+  }
+
+  /* === Layout === */
+
+  /* Single column for print */
   .print-single-col {
     display: block !important;
     grid-template-columns: 1fr !important;
@@ -134,16 +169,10 @@ button {
     max-width: 100% !important;
   }
 
-  /* Sticky sidebar — unstick for print */
-  .sticky {
+  /* Unstick sidebar */
+  .sticky, .lg\:sticky {
     position: relative !important;
     top: auto !important;
-  }
-
-  /* Page margins */
-  @page {
-    margin: 1.5cm 1cm;
-    size: A4;
   }
 }
 
