@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useInView, useTransform } from "framer-motion";
 import type { ItineraryDay } from "@/data/packages";
 
 interface ItineraryTimelineProps {
@@ -12,39 +12,40 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 80%", "end 50%"],
+    offset: ["start 70%", "end 70%"],
   });
+
+  // Clamp progress so line never overshoots past last circle
+  const clampedProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <div>
       <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
 
       <div ref={containerRef} className="relative">
-        {/* Track line — static gray */}
+        {/* Track line — static gray, from first circle center to last circle center */}
         <div
-          className="absolute w-[2px] bg-primary/15"
-          style={{ left: "19px", top: "40px", bottom: "40px" }}
+          className="absolute w-[2px] bg-primary/12"
+          style={{ left: "19px", top: "40px", bottom: "calc(0% + 40px)" }}
         />
-        {/* Progress line — scroll-driven fill */}
+        {/* Progress line — scroll-driven fill, same start/end as track */}
         <motion.div
           className="absolute w-[2px] bg-primary origin-top"
           style={{
             left: "19px",
             top: "40px",
-            bottom: "40px",
-            scaleY: scrollYProgress,
+            bottom: "calc(0% + 40px)",
+            scaleY: clampedProgress,
           }}
         />
 
         {/* Milestones */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
           {itinerary.map((day, index) => (
             <Milestone
               key={day.day}
               day={day}
               index={index}
-              total={itinerary.length}
-              progress={scrollYProgress}
             />
           ))}
         </div>
@@ -56,49 +57,39 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
 function Milestone({
   day,
   index,
-  total,
-  progress,
 }: {
   day: ItineraryDay;
   index: number;
-  total: number;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
-  const threshold = total > 1 ? index / (total - 1) : 0;
-  const isActive = useTransform(progress, (v) => v >= threshold - 0.05);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-30% 0px -30% 0px" });
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="flex gap-5"
+      className="flex gap-4 sm:gap-5"
     >
-      {/* Circle column — fixed width */}
+      {/* Circle column */}
       <div className="flex flex-col items-center shrink-0 pt-5" style={{ width: "40px" }}>
-        <motion.div
-          className="w-10 h-10 rounded-full border-[3px] flex items-center justify-center z-10 bg-white"
-          style={{
-            backgroundColor: useTransform(isActive, (v) =>
-              v ? "#6B1D2A" : "#ffffff"
-            ),
-            borderColor: useTransform(isActive, (v) =>
-              v ? "#6B1D2A" : "rgba(107,29,42,0.3)"
-            ),
-          }}
+        <div
+          className={`w-10 h-10 rounded-full border-[3px] flex items-center justify-center z-10 transition-all duration-500 ${
+            isInView
+              ? "bg-primary border-primary shadow-md"
+              : "bg-white border-primary/30"
+          }`}
         >
-          <motion.span
-            className="text-sm font-bold"
-            style={{
-              color: useTransform(isActive, (v) =>
-                v ? "#ffffff" : "#6B1D2A"
-              ),
-            }}
+          <span
+            className={`text-sm font-bold transition-colors duration-500 ${
+              isInView ? "text-white" : "text-primary"
+            }`}
           >
             {day.day}
-          </motion.span>
-        </motion.div>
+          </span>
+        </div>
       </div>
 
       {/* Content card */}
