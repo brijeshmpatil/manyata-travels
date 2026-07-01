@@ -19,10 +19,10 @@ export default function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.15 }}
       whileHover={{ y: -8 }}
-      className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
+      className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow flex flex-col h-full"
     >
       {/* Image */}
-      <Link href={`/packages/${pkg.slug}`} className="block relative h-56 overflow-hidden">
+      <Link href={`/packages/${pkg.slug}`} className="block relative h-56 overflow-hidden shrink-0">
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
           style={{ backgroundImage: `url('${pkg.cardImage}')` }}
@@ -44,7 +44,7 @@ export default function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       </Link>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-1">
         <Link href={`/packages/${pkg.slug}`}>
           <h3 className="text-xl font-bold text-dark mb-1 group-hover:text-primary transition-colors">
             {pkg.title}
@@ -69,7 +69,7 @@ export default function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         </div>
 
         {/* Destinations tags */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="flex flex-wrap gap-2 mb-5 flex-1">
           {pkg.destinations.slice(0, 4).map((d) => (
             <span
               key={d}
