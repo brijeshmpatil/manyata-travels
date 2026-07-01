@@ -12,8 +12,8 @@
   --color-dark-light: #2D2D44;
   --color-gray: #6B7280;
   --color-gray-light: #E5E7EB;
-  --font-sans: var(--font-playfair), Georgia, serif;
-  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-heading), Georgia, serif;
+  --font-body: var(--font-body), system-ui, sans-serif;
 }
 
 

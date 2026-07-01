@@ -37,6 +37,10 @@ export default function PackageCard({ pkg, index = 0 }: PackageCardProps) {
             {pkg.duration}
           </span>
         </div>
+        <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-red-600 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide font-[var(--font-body)]">
+          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+          Limited Seats
+        </div>
       </Link>
 
       {/* Content */}
