@@ -53,22 +53,19 @@ export default function ItineraryTimeline({ itinerary }: ItineraryTimelineProps)
 
       <div ref={containerRef} className="relative">
         {/* Track line — dynamic height from first to last dot */}
-        {lineHeight > 0 && (
-          <>
-            <div
-              className="absolute w-[2px] bg-primary/12 left-[19px]"
-              style={{ top: "40px", height: `${lineHeight}px` }}
-            />
-            <motion.div
-              className="absolute w-[2px] bg-primary origin-top left-[19px]"
-              style={{
-                top: "40px",
-                height: `${lineHeight}px`,
-                scaleY: useTransform(scrollYProgress, [0, 1], [0, 1]),
-              }}
-            />
-          </>
-        )}
+        <div
+          className="absolute w-[2px] bg-primary/12 left-[19px]"
+          style={{ top: "40px", height: lineHeight > 0 ? `${lineHeight}px` : "0px" }}
+        />
+        {/* Progress line — scroll-driven fill */}
+        <motion.div
+          className="absolute w-[2px] bg-primary origin-top left-[19px]"
+          style={{
+            top: "40px",
+            height: lineHeight > 0 ? `${lineHeight}px` : "0px",
+            scaleY: scrollYProgress,
+          }}
+        />
 
         {/* Milestones */}
         <div className="flex flex-col gap-6">
