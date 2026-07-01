@@ -47,9 +47,9 @@ export default function WhyChooseUs() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {reasons.map((reason, index) => (
-            <ScrollAnimation key={reason.title} delay={index * 0.1} parallax parallaxSpeed={0.03}>
+            <ScrollAnimation key={reason.title} delay={index * 0.1}>
               <div className="bg-white p-8 rounded-2xl text-center hover:shadow-2xl transition-all duration-500 h-full flex flex-col items-center justify-start group border border-transparent hover:border-accent/20">
-                <div className={`w-18 h-18 bg-gradient-to-br ${reason.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm`}
+                <div className={`bg-gradient-to-br ${reason.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm`}
                   style={{ width: '72px', height: '72px' }}
                 >
                   <reason.icon className="w-8 h-8 text-primary" strokeWidth={1.5} />

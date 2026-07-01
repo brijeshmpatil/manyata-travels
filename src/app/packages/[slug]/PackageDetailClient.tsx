@@ -81,31 +81,43 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
 
             {/* Itinerary */}
             <ScrollAnimation>
-              <h2 className="text-2xl font-bold text-dark mb-8">Day-by-Day Itinerary</h2>
-              <div className="space-y-0">
-                {pkg.itinerary.map((day, index) => (
-                  <ScrollAnimation key={day.day} delay={index * 0.05}>
-                    <div className="relative pl-8 pb-8 border-l-2 border-primary/20 last:border-l-0">
-                      {/* Timeline dot */}
-                      <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                        <span className="text-[10px] text-white font-bold">{day.day}</span>
-                      </div>
-                      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-light/50 ml-4">
-                        <div className="flex items-start justify-between gap-4 mb-2">
-                          <h3 className="font-bold text-dark">
-                            <span className="text-primary">Day {day.day}:</span> {day.title}
-                          </h3>
-                          <span className="bg-cream text-primary text-xs px-3 py-1 rounded-full shrink-0 font-[var(--font-body)]">
-                            {day.stay}
-                          </span>
+              <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
+              <div className="relative">
+                {/* Vertical connecting line */}
+                <div className="absolute left-5 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/40 to-primary/10" />
+
+                <div className="space-y-6">
+                  {pkg.itinerary.map((day, index) => (
+                    <ScrollAnimation key={day.day} delay={index * 0.08}>
+                      <div className="relative flex gap-5 sm:gap-7">
+                        {/* Day number circle */}
+                        <div className="relative z-10 shrink-0">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center shadow-lg ring-4 ring-white">
+                            <span className="text-sm sm:text-base text-white font-bold">{day.day}</span>
+                          </div>
                         </div>
-                        <p className="text-gray text-sm leading-relaxed font-[var(--font-body)]">
-                          {day.description}
-                        </p>
+
+                        {/* Content card */}
+                        <div className="flex-1 bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-gray-light/30 hover:shadow-lg transition-shadow">
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div>
+                              <p className="text-primary text-xs font-semibold uppercase tracking-wider mb-1 font-[var(--font-body)]">
+                                Day {day.day}
+                              </p>
+                              <h3 className="text-lg font-bold text-dark">{day.title}</h3>
+                            </div>
+                            <span className="bg-gradient-to-r from-primary/10 to-accent/10 text-primary text-xs px-4 py-1.5 rounded-full shrink-0 font-semibold font-[var(--font-body)] border border-primary/10">
+                              {day.stay}
+                            </span>
+                          </div>
+                          <p className="text-gray text-sm leading-relaxed font-[var(--font-body)]">
+                            {day.description}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </ScrollAnimation>
-                ))}
+                    </ScrollAnimation>
+                  ))}
+                </div>
               </div>
             </ScrollAnimation>
 
