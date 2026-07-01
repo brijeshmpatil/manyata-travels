@@ -83,19 +83,21 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
             <ScrollAnimation>
               <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
               <div className="relative">
+                {/* Continuous line — center of first circle to center of last circle */}
+                <div
+                  className="absolute w-0.5 bg-primary/30 left-[19px] sm:left-[23px]"
+                  style={{ top: "20px", height: "calc(100% - 40px)" }}
+                />
+
                 <div className="space-y-6">
                   {pkg.itinerary.map((day, index) => (
                     <ScrollAnimation key={day.day} delay={index * 0.08}>
                       <div className="relative flex gap-5 sm:gap-7">
-                        {/* Day number circle + connecting line */}
-                        <div className="relative z-10 shrink-0 flex flex-col items-center">
+                        {/* Day number circle */}
+                        <div className="relative z-10 shrink-0">
                           <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center shadow-lg ring-4 ring-white">
                             <span className="text-sm sm:text-base text-white font-bold">{day.day}</span>
                           </div>
-                          {/* Line below circle — hidden on last item */}
-                          {index < pkg.itinerary.length - 1 && (
-                            <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/40 to-primary/10 mt-1" />
-                          )}
                         </div>
 
                         {/* Content card */}
