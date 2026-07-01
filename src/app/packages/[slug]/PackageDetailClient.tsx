@@ -83,8 +83,8 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
             <ScrollAnimation>
               <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
               <div className="relative">
-                {/* Vertical connecting line */}
-                <div className="absolute left-5 sm:left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/40 to-primary/10" />
+                {/* Vertical connecting line — stops at last circle */}
+                <div className="absolute left-5 sm:left-6 top-0 bottom-16 w-0.5 bg-gradient-to-b from-primary via-primary/40 to-primary/10" />
 
                 <div className="space-y-6">
                   {pkg.itinerary.map((day, index) => (
