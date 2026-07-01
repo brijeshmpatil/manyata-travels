@@ -11,7 +11,7 @@ export default function PackagesPage() {
   return (
     <>
       {/* Page Header */}
-      <section className="relative pt-32 pb-16 px-4">
+      <section className="relative pt-44 sm:pt-40 pb-16 px-4">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{

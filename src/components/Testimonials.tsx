@@ -19,11 +19,11 @@ export default function Testimonials() {
           </div>
         </ScrollAnimation>
 
-        {/* Horizontal scroll on mobile, grid on desktop */}
-        <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:overflow-visible scrollbar-hide">
+        {/* Stack on mobile, grid on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.slice(0, 3).map((testimonial, index) => (
             <ScrollAnimation key={testimonial.name} delay={index * 0.1}>
-              <div className="min-w-[320px] lg:min-w-0 snap-start bg-cream rounded-2xl p-8 flex flex-col">
+              <div className="bg-cream rounded-2xl p-8 flex flex-col">
                 {/* Stars */}
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (

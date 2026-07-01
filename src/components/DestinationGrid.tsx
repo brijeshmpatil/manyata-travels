@@ -8,7 +8,7 @@ import ScrollAnimation from "./ScrollAnimation";
 
 export default function DestinationGrid() {
   return (
-    <section className="py-20 px-4 bg-white">
+    <section className="py-20 px-4 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <ScrollAnimation>
           <div className="text-center mb-14">

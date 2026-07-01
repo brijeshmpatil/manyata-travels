@@ -9,7 +9,7 @@ export default function FeaturedPackages() {
   const featured = getFeaturedPackages();
 
   return (
-    <section className="py-20 px-4 bg-cream">
+    <section className="py-20 px-4 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <ScrollAnimation>
           <div className="text-center mb-14">

@@ -8,7 +8,7 @@ export default function CTABanner() {
   return (
     <section className="relative py-24 px-4 overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1597074866923-dc0589150458?w=1920&q=80')",
