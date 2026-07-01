@@ -32,7 +32,7 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
       </div>
 
       {/* Hero */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-end">
+      <section className="print-section-hero relative h-[60vh] min-h-[400px] flex items-end">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${pkg.heroImage}')` }}
@@ -70,7 +70,7 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 print-single-col">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
             {/* Destinations */}
@@ -89,6 +89,7 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
 
             {/* Highlights */}
             <ScrollAnimation>
+              <div className="print-section">
               <h2 className="text-2xl font-bold text-dark mb-6">Trip Highlights</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {pkg.highlights.map((highlight) => (
@@ -143,7 +144,7 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 self-start">
             <div className="sticky top-24 space-y-6">
               {/* Price Card */}
               <ScrollAnimation direction="right">
