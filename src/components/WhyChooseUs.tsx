@@ -8,21 +8,25 @@ const reasons = [
     icon: Compass,
     title: "Curated Trips",
     description: "Handpicked stays, routes & experiences tailored for every traveller.",
+    gradient: "from-primary/20 to-accent/10",
   },
   {
     icon: Star,
     title: "Best Value",
     description: "Transparent pricing with no hidden costs or surprises.",
+    gradient: "from-accent/20 to-primary/10",
   },
   {
     icon: Headphones,
     title: "24/7 Support",
     description: "Dedicated trip manager from booking to safe return.",
+    gradient: "from-primary/20 to-accent/10",
   },
   {
     icon: Heart,
     title: "Trusted",
     description: "Years of experience crafting royal & loyal journeys.",
+    gradient: "from-accent/20 to-primary/10",
   },
 ];
 
@@ -43,10 +47,12 @@ export default function WhyChooseUs() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {reasons.map((reason, index) => (
-            <ScrollAnimation key={reason.title} delay={index * 0.1}>
-              <div className="bg-white p-8 rounded-2xl text-center hover:shadow-xl transition-shadow h-full flex flex-col items-center justify-start group">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors shrink-0">
-                  <reason.icon className="w-8 h-8 text-primary" />
+            <ScrollAnimation key={reason.title} delay={index * 0.1} parallax parallaxSpeed={0.03}>
+              <div className="bg-white p-8 rounded-2xl text-center hover:shadow-2xl transition-all duration-500 h-full flex flex-col items-center justify-start group border border-transparent hover:border-accent/20">
+                <div className={`w-18 h-18 bg-gradient-to-br ${reason.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm`}
+                  style={{ width: '72px', height: '72px' }}
+                >
+                  <reason.icon className="w-8 h-8 text-primary" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-lg font-bold text-dark mb-3">{reason.title}</h3>
                 <p className="text-gray text-sm leading-relaxed font-[var(--font-body)]">

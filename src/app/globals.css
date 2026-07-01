@@ -39,7 +39,33 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* Smooth image loading */
+/* Smooth transitions globally */
 img {
   transition: opacity 0.3s ease;
+}
+
+/* Smooth section transitions */
+section {
+  will-change: transform;
+}
+
+/* Premium link hover effect */
+a {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Smooth button interactions */
+button {
+  transition: all 0.3s ease;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
