@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Clock, MapPin, Hotel, Check, X, MessageCircle } from "lucide-react";
 import type { TravelPackage } from "@/data/packages";
 import ScrollAnimation from "@/components/ScrollAnimation";
+import ItineraryTimeline from "@/components/ItineraryTimeline";
 
 interface PackageDetailClientProps {
   pkg: TravelPackage;
@@ -80,49 +81,7 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
             </ScrollAnimation>
 
             {/* Itinerary */}
-            <ScrollAnimation>
-              <h2 className="text-2xl font-bold text-dark mb-10">Day-by-Day Itinerary</h2>
-              <div className="relative">
-                {/* Continuous line — center of first circle to center of last circle */}
-                <div
-                  className="absolute w-0.5 bg-primary/30 left-[19px] sm:left-[23px]"
-                  style={{ top: "20px", height: "calc(100% - 40px)" }}
-                />
-
-                <div className="space-y-6">
-                  {pkg.itinerary.map((day, index) => (
-                    <ScrollAnimation key={day.day} delay={index * 0.08}>
-                      <div className="relative flex gap-5 sm:gap-7">
-                        {/* Day number circle */}
-                        <div className="relative z-10 shrink-0">
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center shadow-lg ring-4 ring-white">
-                            <span className="text-sm sm:text-base text-white font-bold">{day.day}</span>
-                          </div>
-                        </div>
-
-                        {/* Content card */}
-                        <div className="flex-1 bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-gray-light/30 hover:shadow-lg transition-shadow">
-                          <div className="flex items-start justify-between gap-3 mb-3">
-                            <div>
-                              <p className="text-primary text-xs font-semibold uppercase tracking-wider mb-1 font-[var(--font-body)]">
-                                Day {day.day}
-                              </p>
-                              <h3 className="text-lg font-bold text-dark">{day.title}</h3>
-                            </div>
-                            <span className="bg-gradient-to-r from-primary/10 to-accent/10 text-primary text-xs px-4 py-1.5 rounded-full shrink-0 font-semibold font-[var(--font-body)] border border-primary/10">
-                              {day.stay}
-                            </span>
-                          </div>
-                          <p className="text-gray text-sm leading-relaxed font-[var(--font-body)]">
-                            {day.description}
-                          </p>
-                        </div>
-                      </div>
-                    </ScrollAnimation>
-                  ))}
-                </div>
-              </div>
-            </ScrollAnimation>
+            <ItineraryTimeline itinerary={pkg.itinerary} />
 
             {/* Inclusions / Exclusions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
