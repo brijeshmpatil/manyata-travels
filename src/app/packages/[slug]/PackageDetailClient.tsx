@@ -89,7 +89,6 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
 
             {/* Highlights */}
             <ScrollAnimation>
-              <div className="print-section">
               <h2 className="text-2xl font-bold text-dark mb-6">Trip Highlights</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {pkg.highlights.map((highlight) => (
@@ -144,8 +143,8 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1 self-start">
-            <div className="sticky top-24 space-y-6">
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-24 space-y-6">
               {/* Price Card */}
               <ScrollAnimation direction="right">
                 <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-light/50">

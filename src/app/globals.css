@@ -19,7 +19,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
   scrollbar-width: none;
 }
 
@@ -31,7 +30,6 @@ body {
   font-family: var(--font-body);
   color: var(--color-dark);
   background: #ffffff;
-  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -67,30 +65,28 @@ button {
   .social-proof-toast, .enquiry-popup,
   [aria-label="Chat on WhatsApp"],
   [aria-label="Toggle menu"],
-  button[aria-label="Open Next.js Dev Tools"] {
+  button[aria-label="Open Next.js Dev Tools"],
+  .no-print {
     display: none !important;
   }
 
-  /* Reset background */
-  body {
+  /* Reset layout */
+  body, html {
     background: white !important;
     overflow: visible !important;
   }
 
-  html {
+  main {
     overflow: visible !important;
   }
 
-  /* Show all content */
+  /* Reset animations */
   * {
     overflow: visible !important;
     opacity: 1 !important;
     transform: none !important;
-  }
-
-  /* Page breaks */
-  section {
-    break-inside: avoid;
+    animation: none !important;
+    transition: none !important;
   }
 
   /* Print header */
@@ -98,15 +94,56 @@ button {
     display: flex !important;
   }
 
-  /* Hide download button in print */
-  .no-print {
-    display: none !important;
-  }
-
   /* Ensure backgrounds print */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  /* === Page Layout === */
+
+  /* Hero section — page 1 */
+  .print-section-hero {
+    break-after: page;
+  }
+
+  /* Each print section keeps together */
+  .print-section {
+    break-inside: avoid;
+    padding-top: 16px;
+  }
+
+  /* Force new page before these sections */
+  .print-page-break {
+    break-before: page;
+  }
+
+  /* Itinerary cards — avoid splitting a single day card */
+  .print-card {
+    break-inside: avoid;
+    margin-bottom: 12px;
+  }
+
+  /* Single column layout for print (no sidebar) */
+  .print-single-col {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .print-single-col > * {
+    max-width: 100% !important;
+  }
+
+  /* Sticky sidebar — unstick for print */
+  .sticky {
+    position: relative !important;
+    top: auto !important;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 1.5cm 1cm;
+    size: A4;
   }
 }
 
