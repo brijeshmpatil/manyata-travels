@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -131,7 +132,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer — slides from right */}
+      {/* Mobile Drawer — rendered via portal to escape nav stacking context */}
+      {typeof document !== "undefined" && createPortal(
       <AnimatePresence>
         {isOpen && (
           <>
@@ -141,7 +143,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="md:hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+              className="md:hidden fixed inset-0 bg-black/50 z-[90] backdrop-blur-sm"
             />
 
             {/* Drawer */}
@@ -150,7 +152,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="md:hidden fixed top-0 right-0 h-full w-full bg-white z-50 shadow-2xl flex flex-col"
+              className="md:hidden fixed inset-0 bg-white z-[100] shadow-2xl flex flex-col overflow-y-auto"
             >
               {/* Drawer header */}
               <div className="flex items-center justify-between p-5 border-b border-gray-light">
@@ -224,7 +226,9 @@ export default function Navbar() {
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      )}
     </nav>
   );
 }
