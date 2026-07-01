@@ -40,7 +40,7 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
-            src="https://videos.pexels.com/video-files/30778285/13165642_1920_1080_30fps.mp4"
+            src="/hero-video.mp4"
             type="video/mp4"
           />
         </video>
