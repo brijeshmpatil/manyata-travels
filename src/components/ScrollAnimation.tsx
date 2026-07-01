@@ -31,7 +31,7 @@ export default function ScrollAnimation({
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className={className}
+      className={`h-full ${className}`}
     >
       {children}
     </motion.div>

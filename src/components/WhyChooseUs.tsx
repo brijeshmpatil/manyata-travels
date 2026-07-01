@@ -28,10 +28,10 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 px-4 bg-cream">
+    <section className="py-16 px-4 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <ScrollAnimation>
-          <div className="text-center mb-14">
+          <div className="text-center mb-12">
             <p className="text-accent text-sm tracking-[0.2em] uppercase mb-3 font-[var(--font-body)]">
               Why Manyata Travels
             </p>
@@ -41,11 +41,11 @@ export default function WhyChooseUs() {
           </div>
         </ScrollAnimation>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {reasons.map((reason, index) => (
             <ScrollAnimation key={reason.title} delay={index * 0.1}>
-              <div className="bg-white p-8 rounded-2xl text-center hover:shadow-xl transition-shadow group">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
+              <div className="bg-white p-8 rounded-2xl text-center hover:shadow-xl transition-shadow h-full flex flex-col items-center justify-start group">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors shrink-0">
                   <reason.icon className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-lg font-bold text-dark mb-3">{reason.title}</h3>

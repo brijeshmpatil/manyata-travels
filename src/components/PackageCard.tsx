@@ -69,17 +69,17 @@ export default function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         </div>
 
         {/* Destinations tags */}
-        <div className="flex flex-wrap gap-2 mb-5 flex-1">
+        <div className="flex flex-wrap gap-2 mb-5 flex-1 content-start">
           {pkg.destinations.slice(0, 4).map((d) => (
             <span
               key={d}
-              className="bg-cream text-primary text-xs px-3 py-1 rounded-full font-medium font-[var(--font-body)]"
+              className="bg-cream text-primary text-xs px-3 py-1 rounded-full font-medium font-[var(--font-body)] h-fit"
             >
               {d}
             </span>
           ))}
           {pkg.destinations.length > 4 && (
-            <span className="bg-cream text-gray text-xs px-3 py-1 rounded-full font-[var(--font-body)]">
+            <span className="bg-cream text-gray text-xs px-3 py-1 rounded-full font-[var(--font-body)] h-fit">
               +{pkg.destinations.length - 4} more
             </span>
           )}
