@@ -11,7 +11,7 @@ export default function CTABanner() {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1597074866923-dc0589150458?w=1920&q=80')",
+            "url('https://images.unsplash.com/photo-1566837945700-30057527ade0?w=1920&q=80')",
         }}
       >
         <div className="absolute inset-0 bg-primary/80" />

@@ -36,7 +36,7 @@ export default function ContactClient() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1585136917767-14b41e43e660?w=1920&q=80')",
+            backgroundImage: "url('https://images.unsplash.com/photo-1626621331169-5f34be280ed9?w=1920&q=80')",
           }}
         >
           <div className="absolute inset-0 bg-primary/85" />

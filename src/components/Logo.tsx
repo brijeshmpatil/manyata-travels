@@ -16,8 +16,8 @@ export default function Logo({
   size = "md",
 }: LogoProps) {
   const { width, height } = sizes[size];
-  const primary = color === "light" ? "#FFFFFF" : "#6B1D2A";
-  const accent = "#D4A853";
+  const primary = color === "light" ? "#FFFFFF" : "#1B6B78";
+  const accent = "#E8B84B";
 
   return (
     <svg

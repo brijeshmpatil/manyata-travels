@@ -103,8 +103,8 @@ export const packages: TravelPackage[] = [
     price: 28500,
     priceNote: "Excluding Flights",
     destinations: ["Srinagar", "Gulmarg", "Pahalgam", "Sonmarg"],
-    heroImage: "https://images.unsplash.com/photo-1597074866923-dc0589150458?w=1920&q=80",
-    cardImage: "https://images.unsplash.com/photo-1597074866923-dc0589150458?w=800&q=80",
+    heroImage: "https://images.unsplash.com/photo-1566837945700-30057527ade0?w=1920&q=80",
+    cardImage: "https://images.unsplash.com/photo-1566837945700-30057527ade0?w=800&q=80",
     highlights: ["Dal Lake Shikara", "Gulmarg Gondola", "Betaab Valley", "Mughal Gardens", "Thajiwas Glacier", "Local Cuisine"],
     itinerary: [
       { day: 1, title: "Arrival in Srinagar", description: "Arrive at Srinagar Airport. Transfer to houseboat on Dal Lake. Evening Shikara ride watching the sunset over the lake. Overnight stay on houseboat.", stay: "Srinagar" },
@@ -142,7 +142,7 @@ export const packages: TravelPackage[] = [
     priceNote: "Excluding Flights",
     destinations: ["Manali", "Solang Valley", "Rohtang Pass", "Kullu", "Shimla"],
     heroImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1920&q=80",
-    cardImage: "https://images.unsplash.com/photo-1585136917767-14b41e43e660?w=800&q=80",
+    cardImage: "https://images.unsplash.com/photo-1626621331169-5f34be280ed9?w=800&q=80",
     highlights: ["Solang Valley", "Rohtang Pass", "Hadimba Temple", "Mall Road Shimla", "Kullu Valley", "Toy Train"],
     itinerary: [
       { day: 1, title: "Arrival in Manali", description: "Arrive in Manali. Check into hotel and rest. Evening visit to Mall Road and Hadimba Temple.", stay: "Manali" },

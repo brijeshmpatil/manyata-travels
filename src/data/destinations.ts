@@ -15,19 +15,19 @@ export const destinations: Destination[] = [
   {
     name: "Kashmir",
     tagline: "Paradise on Earth",
-    image: "https://images.unsplash.com/photo-1597074866923-dc0589150458?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1566837945700-30057527ade0?w=800&q=80",
     slug: "kashmir-paradise-2026"
   },
   {
     name: "Manali",
     tagline: "Valley of the Gods",
-    image: "https://images.unsplash.com/photo-1585136917767-14b41e43e660?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1626621331169-5f34be280ed9?w=800&q=80",
     slug: "manali-shimla-2026"
   },
   {
     name: "Rishikesh",
     tagline: "Yoga Capital of the World",
-    image: "https://images.unsplash.com/photo-1600100397608-34e0d1e9d632?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&q=80",
     slug: ""
   },
   {

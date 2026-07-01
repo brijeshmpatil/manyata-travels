@@ -42,7 +42,7 @@ export default function AboutClient() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1600100397608-34e0d1e9d632?w=1920&q=80')",
+            backgroundImage: "url('https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1920&q=80')",
           }}
         >
           <div className="absolute inset-0 bg-primary/85" />
@@ -108,7 +108,7 @@ export default function AboutClient() {
                 <div
                   className="rounded-2xl overflow-hidden h-80 bg-cover bg-center"
                   style={{
-                    backgroundImage: "url('https://images.unsplash.com/photo-1597074866923-dc0589150458?w=800&q=80')",
+                    backgroundImage: "url('https://images.unsplash.com/photo-1566837945700-30057527ade0?w=800&q=80')",
                   }}
                 />
                 <div className="absolute -bottom-4 -left-4 bg-accent text-dark px-6 py-3 rounded-xl font-bold text-sm shadow-lg">
