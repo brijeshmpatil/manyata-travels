@@ -28,7 +28,8 @@ export default function PackageCard({ pkg, index = 0 }: PackageCardProps) {
           style={{ backgroundImage: `url('${pkg.cardImage}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute top-4 right-4 bg-accent text-dark px-4 py-1.5 rounded-full text-sm font-bold font-[var(--font-body)]">
+        <div className="absolute top-4 right-4 bg-accent text-dark px-4 py-1.5 rounded-lg text-sm font-bold font-[var(--font-body)]">
+          <span className="text-[10px] font-normal block leading-tight">Starting from</span>
           ₹{pkg.price.toLocaleString("en-IN")}
         </div>
         <div className="absolute bottom-4 left-4 flex gap-2">
