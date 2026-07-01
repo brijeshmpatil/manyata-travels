@@ -22,6 +22,7 @@ export interface TravelPackage {
   inclusions: string[];
   exclusions: string[];
   featured: boolean;
+  isSample?: boolean;
 }
 
 export const packages: TravelPackage[] = [
@@ -91,7 +92,8 @@ export const packages: TravelPackage[] = [
       "Expenses arising due to unforeseen circumstances",
       "Horse riding, adventure activity tickets and any tips"
     ],
-    featured: true
+    featured: true,
+    isSample: false
   },
   {
     slug: "kashmir-paradise-2026",
@@ -129,7 +131,8 @@ export const packages: TravelPackage[] = [
       "Gondola tickets",
       "Horse riding charges"
     ],
-    featured: true
+    featured: true,
+    isSample: true
   },
   {
     slug: "manali-shimla-2026",
@@ -165,7 +168,8 @@ export const packages: TravelPackage[] = [
       "Rohtang Pass permit fees",
       "Personal expenses"
     ],
-    featured: true
+    featured: true,
+    isSample: true
   }
 ];
 

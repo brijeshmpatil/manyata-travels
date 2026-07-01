@@ -28,6 +28,11 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            {pkg.isSample && (
+              <span className="inline-block bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3 font-[var(--font-body)]">
+                Sample Itinerary
+              </span>
+            )}
             <p className="text-accent text-sm tracking-[0.2em] uppercase mb-2 font-[var(--font-body)]">
               {pkg.subtitle}
             </p>
