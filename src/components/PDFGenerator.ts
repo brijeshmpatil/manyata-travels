@@ -27,47 +27,47 @@ function buildHTML(pkg: TravelPackage): string {
   const exclusions = pkg.exclusions.map(e => `<li>✗ ${e}</li>`).join("");
 
   return `
-    <div id="pdf-content" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;font-size:11px;line-height:1.5;padding:20px;">
+    <div id="pdf-content" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;font-size:10px;line-height:1.45;padding:12px;">
       <style>
-        .hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:2px solid #1B6B78;margin-bottom:14px}
+        .hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:2px solid #1B6B78;margin-bottom:16px}
         .hl-l{display:flex;align-items:center;gap:10px}
-        .logo{width:34px;height:34px;background:#1B6B78;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
-        .cn{font-size:15px;font-weight:700;color:#1B6B78}
+        .logo{width:32px;height:32px;background:#1B6B78;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+        .cn{font-size:14px;font-weight:700;color:#1B6B78}
         .tl{font-size:7px;text-transform:uppercase;letter-spacing:2px;color:#888}
-        .hr{text-align:right;font-size:9px;color:#666;line-height:1.6}
-        .pt{font-size:22px;font-weight:700;color:#1B6B78;margin:0 0 2px}
-        .ps{font-size:11px;color:#666;margin:0 0 6px}
-        .meta{font-size:10px;color:#444;margin-bottom:8px}
-        .sep{margin:0 6px;color:#ccc}
-        .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-        .tag{background:#f0f9fa;color:#1B6B78;padding:2px 9px;border-radius:10px;font-size:9px;font-weight:600;border:1px solid #d0eef2}
-        .stl{font-size:13px;font-weight:700;color:#1a1a1a;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid #e5e7eb}
-        .hls{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-        .hl{font-size:9px;color:#1B6B78;background:#f0f9fa;padding:2px 9px;border-radius:4px}
-        .ptable{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:14px}
-        .ptable th{background:#1B6B78;color:#fff;padding:5px 10px;text-align:left;font-weight:600}
-        .ptable td{padding:5px 10px;border-bottom:1px solid #e5e7eb}
+        .hr{text-align:right;font-size:8px;color:#666;line-height:1.5}
+        .pt{font-size:20px;font-weight:700;color:#1B6B78;margin:0 0 1px}
+        .ps{font-size:10px;color:#666;margin:0 0 4px}
+        .meta{font-size:9px;color:#444;margin-bottom:6px}
+        .sep{margin:0 5px;color:#ccc}
+        .tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+        .tag{background:#f0f9fa;color:#1B6B78;padding:2px 8px;border-radius:10px;font-size:8px;font-weight:600;border:1px solid #d0eef2}
+        .stl{font-size:12px;font-weight:700;color:#1a1a1a;margin:0 0 5px;padding-bottom:3px;border-bottom:1px solid #e5e7eb}
+        .hls{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+        .hl{font-size:8px;color:#1B6B78;background:#f0f9fa;padding:2px 8px;border-radius:4px}
+        .ptable{width:100%;border-collapse:collapse;font-size:9px;margin-bottom:12px}
+        .ptable th{background:#1B6B78;color:#fff;padding:4px 10px;text-align:left;font-weight:600}
+        .ptable td{padding:4px 10px;border-bottom:1px solid #e5e7eb}
         .ptable tr:nth-child(even) td{background:#f9fafb}
         .pc{font-weight:700;color:#1B6B78}
-        .sp{display:flex;align-items:baseline;gap:8px;margin-bottom:14px}
-        .sl{color:#666;font-size:10px}
-        .sv{font-size:18px;font-weight:700;color:#1B6B78}
-        .sn{font-size:9px;color:#999}
-        .dc{border:1px solid #e5e7eb;border-radius:6px;padding:8px 12px;margin-bottom:6px;page-break-inside:avoid}
-        .dh{display:flex;align-items:center;gap:8px;margin-bottom:3px}
-        .dn{background:#1B6B78;color:#fff;font-size:7px;font-weight:700;padding:2px 7px;border-radius:8px;text-transform:uppercase}
-        .dt{font-size:11px;font-weight:700;color:#1a1a1a;flex:1}
-        .ds{font-size:7px;color:#1B6B78;background:#f0f9fa;padding:2px 7px;border-radius:8px;border:1px solid #d0eef2}
-        .dd{font-size:10px;color:#444;line-height:1.5;margin:0}
-        .ieg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-        .ib{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px 12px;font-size:9px;line-height:1.6}
-        .eb{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:8px 12px;font-size:9px;line-height:1.6}
-        .it{font-size:10px;font-weight:700;color:#166534;margin:0 0 4px}
-        .et{font-size:10px;font-weight:700;color:#991b1b;margin:0 0 4px}
+        .sp{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+        .sl{color:#666;font-size:9px}
+        .sv{font-size:16px;font-weight:700;color:#1B6B78}
+        .sn{font-size:8px;color:#999}
+        .dc{border:1px solid #e5e7eb;border-radius:5px;padding:6px 10px;margin-bottom:5px;page-break-inside:avoid}
+        .dh{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+        .dn{background:#1B6B78;color:#fff;font-size:7px;font-weight:700;padding:2px 6px;border-radius:8px;text-transform:uppercase}
+        .dt{font-size:10px;font-weight:700;color:#1a1a1a;flex:1}
+        .ds{font-size:7px;color:#1B6B78;background:#f0f9fa;padding:1px 6px;border-radius:8px;border:1px solid #d0eef2}
+        .dd{font-size:9px;color:#444;line-height:1.45;margin:0}
+        .ieg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+        .ib{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:6px 10px;font-size:8px;line-height:1.5}
+        .eb{background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:6px 10px;font-size:8px;line-height:1.5}
+        .it{font-size:9px;font-weight:700;color:#166534;margin:0 0 3px}
+        .et{font-size:9px;font-weight:700;color:#991b1b;margin:0 0 3px}
         .ib ul,.eb ul{list-style:none;padding:0;margin:0}
-        .ib li,.eb li{margin-bottom:2px}
-        .note{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:6px 12px;font-size:9px;color:#92400e;margin-bottom:14px}
-        .ft{border-top:1px solid #e5e7eb;padding-top:6px;font-size:8px;color:#999;text-align:center;line-height:1.6}
+        .ib li,.eb li{margin-bottom:1px}
+        .note{background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:5px 10px;font-size:8px;color:#92400e;margin-bottom:10px}
+        .ft{border-top:1px solid #e5e7eb;padding-top:5px;font-size:7px;color:#999;text-align:center;line-height:1.5;margin-top:6px}
       </style>
 
       <div class="hdr">
@@ -116,7 +116,7 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
   const element = container.querySelector("#pdf-content");
 
   const options = {
-    margin: [10, 10, 10, 10],
+    margin: [8, 8, 8, 8],
     filename: `${pkg.slug}-itinerary.pdf`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { scale: 2, useCORS: true },
