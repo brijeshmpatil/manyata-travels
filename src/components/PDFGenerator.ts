@@ -53,20 +53,20 @@ function buildHTML(pkg: TravelPackage): string {
         .sl{color:#666;font-size:9px}
         .sv{font-size:16px;font-weight:700;color:#1B6B78}
         .sn{font-size:8px;color:#999}
-        .dc{border:1px solid #e5e7eb;border-radius:5px;padding:6px 10px;margin-bottom:6px;page-break-inside:avoid}
+        .dc{border:1px solid #e5e7eb;border-radius:5px;padding:10px 14px;margin-bottom:6px;page-break-inside:avoid}
         .dh{display:flex;align-items:center;gap:6px;margin-bottom:2px}
         .dn{background:#1B6B78;color:#fff;font-size:7px;font-weight:700;padding:2px 6px;border-radius:8px;text-transform:uppercase}
         .dt{font-size:10px;font-weight:700;color:#1a1a1a;flex:1}
         .ds{font-size:7px;color:#1B6B78;background:#f0f9fa;padding:1px 6px;border-radius:8px;border:1px solid #d0eef2}
         .dd{font-size:9px;color:#444;line-height:1.4;margin:0}
         .ieg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;margin-top:6px}
-        .ib{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:6px 10px;font-size:8px;line-height:1.45}
-        .eb{background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:6px 10px;font-size:8px;line-height:1.45}
+        .ib{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:10px 14px;font-size:8px;line-height:1.45}
+        .eb{background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:10px 14px;font-size:8px;line-height:1.45}
         .it{font-size:9px;font-weight:700;color:#166534;margin:0 0 3px}
         .et{font-size:9px;font-weight:700;color:#991b1b;margin:0 0 3px}
         .ib ul,.eb ul{list-style:none;padding:0;margin:0}
         .ib li,.eb li{margin-bottom:1px}
-        .note{background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:4px 10px;font-size:8px;color:#92400e;margin-bottom:6px;margin-top:4px}
+        .note{background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:8px 14px;font-size:8px;color:#92400e;margin-bottom:6px;margin-top:4px}
         .ft{border-top:1px solid #e5e7eb;padding-top:4px;font-size:7px;color:#999;text-align:center;line-height:1.4;margin-top:4px}
       </style>
 
