@@ -97,20 +97,28 @@ button {
     print-color-adjust: exact !important;
   }
 
-  /* Print header — show at top */
+  /* Print header — show at top of page 1 only */
   .print-header {
     display: flex !important;
     margin-bottom: 12px;
     padding-bottom: 12px;
-    border-bottom-width: 2px;
+    border-bottom: 2px solid #1B6B78;
+  }
+
+  /* Reduce section gaps in print */
+  .space-y-12 > * + * {
+    margin-top: 24px !important;
   }
 
   /* === Page Breaks === */
 
-  /* Hero — page 1, then break */
+  /* Hero — compact in print, no full-screen */
   .print-section-hero {
-    break-after: page;
+    height: auto !important;
+    min-height: 250px !important;
+    max-height: 300px !important;
     margin-bottom: 0;
+    break-after: page;
   }
 
   /* Keep each section together */
