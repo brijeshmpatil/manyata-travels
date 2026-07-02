@@ -126,11 +126,11 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
   doc.text("Trip Highlights", margin, y);
-  y += 1;
+  y += 2;
   doc.setDrawColor(...lightGray);
   doc.setLineWidth(0.2);
   doc.line(margin, y, pageW - margin, y);
-  y += 4;
+  y += 6;
 
   tagX = margin;
   doc.setFontSize(7);
@@ -155,11 +155,11 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
   doc.text("Day-by-Day Itinerary", margin, y);
-  y += 1;
+  y += 2;
   doc.setDrawColor(...lightGray);
   doc.setLineWidth(0.2);
   doc.line(margin, y, pageW - margin, y);
-  y += 5;
+  y += 6;
 
   for (const day of pkg.itinerary) {
     doc.setFontSize(8);
