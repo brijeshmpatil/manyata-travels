@@ -105,6 +105,7 @@ function Milestone({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       className="flex gap-4 sm:gap-5"
+      style={{ breakInside: "avoid" }}
     >
       {/* Circle column — hidden in print */}
       <div className="flex flex-col items-center shrink-0 pt-5 itinerary-dot" style={{ width: "40px" }}>
