@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Hotel, Check, X, MessageCircle, Download } from "lucide-react";
+import { Clock, MapPin, Hotel, Check, X, MessageCircle, Download, Loader2 } from "lucide-react";
 import type { TravelPackage } from "@/data/packages";
+import { generateItineraryPDF } from "@/components/PDFGenerator";
 import ScrollAnimation from "@/components/ScrollAnimation";
 import ItineraryTimeline from "@/components/ItineraryTimeline";
 
@@ -12,6 +14,17 @@ interface PackageDetailClientProps {
 }
 
 export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailClientProps) {
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    setDownloading(true);
+    try {
+      await generateItineraryPDF(pkg);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   return (
     <>
       {/* Print-only header — visible only in PDF */}
@@ -212,18 +225,18 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
                     Call to Book
                   </a>
 
-                  {/* Download PDF — opens print page in popup */}
+                  {/* Download PDF — generates and downloads directly */}
                   <button
-                    onClick={() => {
-                      const w = window.open(`/packages/${pkg.slug}/print`, '_blank', 'width=900,height=700');
-                      if (w) {
-                        w.addEventListener('afterprint', () => w.close());
-                      }
-                    }}
-                    className="flex items-center justify-center gap-2 w-full bg-cream hover:bg-cream-dark text-primary py-4 rounded-xl text-base font-semibold transition-colors border border-primary/20 font-[var(--font-body)]"
+                    onClick={handleDownload}
+                    disabled={downloading}
+                    className="flex items-center justify-center gap-2 w-full bg-cream hover:bg-cream-dark text-primary py-4 rounded-xl text-base font-semibold transition-colors border border-primary/20 font-[var(--font-body)] disabled:opacity-60"
                   >
-                    <Download className="w-5 h-5" />
-                    Download Itinerary PDF
+                    {downloading ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Download className="w-5 h-5" />
+                    )}
+                    {downloading ? "Generating PDF..." : "Download Itinerary PDF"}
                   </button>
                 </div>
               </ScrollAnimation>
