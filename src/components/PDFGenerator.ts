@@ -1,131 +1,300 @@
 import type { TravelPackage } from "@/data/packages";
 import { siteConfig } from "@/data/config";
 
-function buildHTML(pkg: TravelPackage): string {
-  const destinations = pkg.destinations.map(d => `<span class="tag">${d}</span>`).join("");
-  const highlights = pkg.highlights.map(h => `<span class="hl">✦ ${h}</span>`).join("");
-
-  const pricing = pkg.pricingTiers && pkg.pricingTiers.length > 0
-    ? `<table class="ptable">
-        <thead><tr><th>Travel Option</th><th>Price (Per Person)</th></tr></thead>
-        <tbody>${pkg.pricingTiers.map(t => `<tr><td>${t.label}</td><td class="pc">₹${t.price.toLocaleString("en-IN")}</td></tr>`).join("")}</tbody>
-      </table>`
-    : `<div class="sp"><span class="sl">Per Person:</span> <span class="sv">₹${pkg.price.toLocaleString("en-IN")}</span> <span class="sn">${pkg.priceNote}</span></div>`;
-
-  const itinerary = pkg.itinerary.map(day =>
-    `<div class="dc">
-      <div class="dh">
-        <span class="dn">Day ${day.day}</span>
-        <span class="dt">${day.title}</span>
-        <span class="ds">${day.stay}</span>
-      </div>
-      <p class="dd">${day.description}</p>
-    </div>`
-  ).join("");
-
-  const inclusions = pkg.inclusions.map(i => `<li>✓ ${i}</li>`).join("");
-  const exclusions = pkg.exclusions.map(e => `<li>✗ ${e}</li>`).join("");
-
-  return `
-    <div id="pdf-content" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;font-size:10px;line-height:1.45;padding:12px;">
-      <style>
-        .hdr{display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;border-bottom:2px solid #1B6B78;margin-bottom:8px}
-        .hl-l{display:flex;align-items:center;gap:8px}
-        .logo{width:30px;height:30px;background:#1B6B78;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
-        .cn{font-size:13px;font-weight:700;color:#1B6B78}
-        .tl{font-size:6px;text-transform:uppercase;letter-spacing:2px;color:#888}
-        .hr{text-align:right;font-size:8px;color:#666;line-height:1.4}
-        .pt{font-size:18px;font-weight:700;color:#1B6B78;margin:0 0 1px}
-        .ps{font-size:9px;color:#666;margin:0 0 3px}
-        .meta{font-size:9px;color:#444;margin-bottom:4px}
-        .sep{margin:0 4px;color:#ccc}
-        .tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
-        .tag{background:#f0f9fa;color:#1B6B78;padding:4px 10px;border-radius:14px;font-size:8px;font-weight:600;border:1px solid #d0eef2;display:inline-flex;align-items:center;line-height:1}
-        .stl{font-size:11px;font-weight:700;color:#1a1a1a;margin:0 0 4px;padding-bottom:2px;border-bottom:1px solid #e5e7eb}
-        .hls{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
-        .hl{font-size:8px;color:#1B6B78;background:#f0f9fa;padding:4px 10px;border-radius:10px;display:inline-flex;align-items:center;line-height:1}
-        .ptable{width:100%;border-collapse:collapse;font-size:9px;margin-bottom:6px}
-        .ptable th{background:#1B6B78;color:#fff;padding:5px 10px;text-align:left;font-weight:600;line-height:1}
-        .ptable td{padding:3px 10px;border-bottom:1px solid #e5e7eb}
-        .ptable tr:nth-child(even) td{background:#f9fafb}
-        .pc{font-weight:700;color:#1B6B78}
-        .sp{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
-        .sl{color:#666;font-size:9px}
-        .sv{font-size:16px;font-weight:700;color:#1B6B78}
-        .sn{font-size:8px;color:#999}
-        .dc{border:1px solid #e5e7eb;border-radius:5px;padding:10px 14px;margin-bottom:6px;page-break-inside:avoid}
-        .dh{display:flex;align-items:center;gap:6px;margin-bottom:2px}
-        .dn{background:#1B6B78;color:#fff;font-size:7px;font-weight:700;padding:3px 8px;border-radius:8px;text-transform:uppercase;display:inline-flex;align-items:center;line-height:1}
-        .dt{font-size:10px;font-weight:700;color:#1a1a1a;flex:1}
-        .ds{font-size:7px;color:#1B6B78;background:#f0f9fa;padding:3px 8px;border-radius:8px;border:1px solid #d0eef2;display:inline-flex;align-items:center;line-height:1}
-        .dd{font-size:9px;color:#444;line-height:1.4;margin:0}
-        .ieg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;margin-top:6px}
-        .ib{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:10px 14px;font-size:8px;line-height:1.45}
-        .eb{background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:10px 14px;font-size:8px;line-height:1.45}
-        .it{font-size:9px;font-weight:700;color:#166534;margin:0 0 3px}
-        .et{font-size:9px;font-weight:700;color:#991b1b;margin:0 0 3px}
-        .ib ul,.eb ul{list-style:none;padding:0;margin:0}
-        .ib li,.eb li{margin-bottom:1px}
-        .note{background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:8px 14px;font-size:8px;color:#92400e;margin-bottom:6px;margin-top:4px}
-        .ft{border-top:1px solid #e5e7eb;padding-top:4px;font-size:7px;color:#999;text-align:center;line-height:1.4;margin-top:4px}
-      </style>
-
-      <div class="hdr">
-        <div class="hl-l">
-          <div class="logo">M</div>
-          <div><div class="cn">Manyata Travels</div><div class="tl">The Royal & Loyal Journey</div></div>
-        </div>
-        <div class="hr">+91 ${siteConfig.phone}<br>${siteConfig.email}<br>${siteConfig.address.city}, ${siteConfig.address.state}</div>
-      </div>
-
-      <h1 class="pt">${pkg.title}</h1>
-      <p class="ps">${pkg.subtitle}</p>
-      <div class="meta">${pkg.duration} <span class="sep">•</span> ${pkg.destinations.length} Destinations <span class="sep">•</span> 3-Star Hotels</div>
-      <div class="tags">${destinations}</div>
-
-      ${pricing}
-
-      <h2 class="stl">Trip Highlights</h2>
-      <div class="hls">${highlights}</div>
-
-      <h2 class="stl">Day-by-Day Itinerary</h2>
-      ${itinerary}
-
-      <div style="margin-top:14px"></div>
-      <div class="ieg">
-        <div class="ib"><h3 class="it">✓ What's Included</h3><ul>${inclusions}</ul></div>
-        <div class="eb"><h3 class="et">✗ What's Not Included</h3><ul>${exclusions}</ul></div>
-      </div>
-
-      <div class="note"><strong>Note:</strong> Pricing is subject to change during New Year and other peak seasons. Contact us for the latest rates.</div>
-
-      <div class="ft"><strong>Manyata Travels</strong> — ${siteConfig.address.full}<br>Phone: +91 ${siteConfig.phone} | Email: ${siteConfig.email}</div>
-    </div>
-  `;
-}
-
 export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
-  const html2pdf = (await import("html2pdf.js")).default;
+  const { jsPDF } = await import("jspdf");
+  const autoTable = (await import("jspdf-autotable")).default;
 
-  const container = document.createElement("div");
-  container.innerHTML = buildHTML(pkg);
-  container.style.position = "absolute";
-  container.style.left = "-9999px";
-  document.body.appendChild(container);
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 15;
+  const contentW = pageW - margin * 2;
+  let y = margin;
 
-  const element = container.querySelector("#pdf-content");
+  const teal: [number, number, number] = [27, 107, 120];
+  const dark: [number, number, number] = [26, 26, 26];
+  const gray: [number, number, number] = [100, 100, 100];
+  const lightGray: [number, number, number] = [229, 231, 235];
+  const white: [number, number, number] = [255, 255, 255];
+  const cream: [number, number, number] = [240, 249, 250];
+  const greenBg: [number, number, number] = [240, 253, 244];
+  const redBg: [number, number, number] = [254, 242, 242];
+  const yellowBg: [number, number, number] = [255, 251, 235];
 
-  const options = {
-    margin: [8, 8, 8, 8],
-    filename: `${pkg.slug}-itinerary.pdf`,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+  const checkPage = (needed: number) => {
+    if (y + needed > pageH - margin) {
+      doc.addPage();
+      y = margin;
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await (html2pdf() as any).set(options).from(element).save();
+  // ============ HEADER ============
+  doc.setFillColor(...teal);
+  doc.circle(margin + 6, y + 6, 6, "F");
+  doc.setTextColor(...white);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text("M", margin + 6, y + 7.5, { align: "center" });
 
-  document.body.removeChild(container);
+  doc.setTextColor(...teal);
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.text("Manyata Travels", margin + 15, y + 5);
+  doc.setTextColor(136, 136, 136);
+  doc.setFontSize(6);
+  doc.setFont("helvetica", "normal");
+  doc.text("THE ROYAL & LOYAL JOURNEY", margin + 15, y + 9);
+
+  doc.setTextColor(...gray);
+  doc.setFontSize(7);
+  doc.text(`+91 ${siteConfig.phone}`, pageW - margin, y + 3, { align: "right" });
+  doc.text(siteConfig.email, pageW - margin, y + 7, { align: "right" });
+  doc.text(`${siteConfig.address.city}, ${siteConfig.address.state}`, pageW - margin, y + 11, { align: "right" });
+
+  y += 14;
+  doc.setDrawColor(...teal);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y, pageW - margin, y);
+  y += 7;
+
+  // ============ TITLE ============
+  doc.setTextColor(...teal);
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(pkg.title, margin, y);
+  y += 5;
+
+  doc.setTextColor(...gray);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text(pkg.subtitle, margin, y);
+  y += 4;
+
+  doc.setTextColor(...dark);
+  doc.setFontSize(8);
+  doc.text(`${pkg.duration}  |  ${pkg.destinations.length} Destinations  |  3-Star Hotels`, margin, y);
+  y += 5;
+
+  // Destination tags
+  let tagX = margin;
+  doc.setFontSize(7);
+  for (const dest of pkg.destinations) {
+    const tw = doc.getTextWidth(dest) + 8;
+    doc.setFillColor(...cream);
+    doc.setDrawColor(208, 238, 242);
+    doc.roundedRect(tagX, y - 3, tw, 6, 2, 2, "FD");
+    doc.setTextColor(...teal);
+    doc.text(dest, tagX + 4, y + 0.5);
+    tagX += tw + 3;
+  }
+  y += 7;
+
+  // ============ PRICING ============
+  if (pkg.pricingTiers && pkg.pricingTiers.length > 0) {
+    autoTable(doc, {
+      startY: y,
+      margin: { left: margin, right: margin },
+      head: [["Travel Option", "Price (Per Person)"]],
+      body: pkg.pricingTiers.map(t => [t.label, `Rs. ${t.price.toLocaleString("en-IN")}`]),
+      headStyles: { fillColor: teal, textColor: white, fontStyle: "bold", fontSize: 8, cellPadding: 3 },
+      bodyStyles: { fontSize: 8, cellPadding: 3, textColor: dark },
+      alternateRowStyles: { fillColor: [249, 250, 251] },
+      columnStyles: { 1: { fontStyle: "bold", textColor: teal } },
+      theme: "grid",
+      styles: { lineColor: lightGray, lineWidth: 0.2 },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    y = (doc as any).lastAutoTable.finalY + 5;
+  } else {
+    doc.setTextColor(...gray);
+    doc.setFontSize(8);
+    doc.text("Per Person:", margin, y);
+    doc.setTextColor(...teal);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Rs. ${pkg.price.toLocaleString("en-IN")}`, margin + 22, y);
+    doc.setTextColor(...gray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(pkg.priceNote, margin + 50, y);
+    y += 6;
+  }
+
+  // ============ HIGHLIGHTS ============
+  doc.setTextColor(...dark);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.text("Trip Highlights", margin, y);
+  y += 1;
+  doc.setDrawColor(...lightGray);
+  doc.setLineWidth(0.2);
+  doc.line(margin, y, pageW - margin, y);
+  y += 4;
+
+  tagX = margin;
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  for (const h of pkg.highlights) {
+    const tw = doc.getTextWidth(h) + 8;
+    if (tagX + tw > pageW - margin) {
+      tagX = margin;
+      y += 7;
+    }
+    doc.setFillColor(...cream);
+    doc.roundedRect(tagX, y - 3, tw, 6, 2, 2, "F");
+    doc.setTextColor(...teal);
+    doc.text(h, tagX + 4, y + 0.5);
+    tagX += tw + 3;
+  }
+  y += 8;
+
+  // ============ ITINERARY ============
+  checkPage(10);
+  doc.setTextColor(...dark);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.text("Day-by-Day Itinerary", margin, y);
+  y += 1;
+  doc.setDrawColor(...lightGray);
+  doc.setLineWidth(0.2);
+  doc.line(margin, y, pageW - margin, y);
+  y += 5;
+
+  for (const day of pkg.itinerary) {
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(day.description, contentW - 12);
+    const cardH = 12 + descLines.length * 3.5;
+    checkPage(cardH + 3);
+
+    // Card border
+    doc.setDrawColor(...lightGray);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(margin, y, contentW, cardH, 2, 2, "S");
+
+    // Day badge
+    const dayLabel = `Day ${day.day}`;
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    const badgeW = doc.getTextWidth(dayLabel) + 6;
+    doc.setFillColor(...teal);
+    doc.roundedRect(margin + 4, y + 3.5, badgeW, 5, 1.5, 1.5, "F");
+    doc.setTextColor(...white);
+    doc.text(dayLabel, margin + 7, y + 6.8);
+
+    // Title
+    doc.setTextColor(...dark);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text(day.title, margin + badgeW + 8, y + 7);
+
+    // Stay badge (right)
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    const stayW = doc.getTextWidth(day.stay) + 6;
+    doc.setFillColor(...cream);
+    doc.setDrawColor(208, 238, 242);
+    doc.roundedRect(pageW - margin - stayW - 4, y + 3.5, stayW, 5, 1.5, 1.5, "FD");
+    doc.setTextColor(...teal);
+    doc.text(day.stay, pageW - margin - stayW - 1, y + 6.8);
+
+    // Description
+    doc.setTextColor(...gray);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(descLines, margin + 6, y + 12);
+
+    y += cardH + 3;
+  }
+
+  // ============ INCLUSIONS / EXCLUSIONS ============
+  // Calculate actual heights needed
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  const halfW = (contentW - 6) / 2;
+
+  let incH = 12;
+  for (const item of pkg.inclusions) {
+    const lines = doc.splitTextToSize(`- ${item}`, halfW - 10);
+    incH += lines.length * 3.2;
+  }
+
+  let excH = 12;
+  for (const item of pkg.exclusions) {
+    const lines = doc.splitTextToSize(`- ${item}`, halfW - 10);
+    excH += lines.length * 3.2;
+  }
+
+  const boxH = Math.max(incH, excH) + 2;
+  checkPage(boxH + 20);
+
+  // Inclusions box
+  doc.setFillColor(...greenBg);
+  doc.setDrawColor(187, 247, 208);
+  doc.roundedRect(margin, y, halfW, boxH, 2, 2, "FD");
+
+  doc.setTextColor(22, 101, 52);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("What's Included", margin + 5, y + 6);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(7);
+  doc.setTextColor(22, 101, 52);
+  let iy = y + 11;
+  for (const item of pkg.inclusions) {
+    const lines = doc.splitTextToSize(`- ${item}`, halfW - 10);
+    doc.text(lines, margin + 5, iy);
+    iy += lines.length * 3.2;
+  }
+
+  // Exclusions box
+  doc.setFillColor(...redBg);
+  doc.setDrawColor(254, 202, 202);
+  doc.roundedRect(margin + halfW + 6, y, halfW, boxH, 2, 2, "FD");
+
+  doc.setTextColor(153, 27, 27);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("What's Not Included", margin + halfW + 11, y + 6);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(7);
+  doc.setTextColor(153, 27, 27);
+  let ey = y + 11;
+  for (const item of pkg.exclusions) {
+    const lines = doc.splitTextToSize(`- ${item}`, halfW - 10);
+    doc.text(lines, margin + halfW + 11, ey);
+    ey += lines.length * 3.2;
+  }
+
+  y += boxH + 5;
+
+  // ============ NOTE ============
+  checkPage(12);
+  doc.setFillColor(...yellowBg);
+  doc.setDrawColor(253, 230, 138);
+  doc.roundedRect(margin, y, contentW, 9, 2, 2, "FD");
+  doc.setTextColor(146, 64, 14);
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "bold");
+  doc.text("Note:", margin + 4, y + 5.5);
+  doc.setFont("helvetica", "normal");
+  doc.text("Pricing is subject to change during New Year and other peak seasons. Contact us for the latest rates.", margin + 15, y + 5.5);
+  y += 13;
+
+  // ============ FOOTER ============
+  checkPage(10);
+  doc.setDrawColor(...lightGray);
+  doc.setLineWidth(0.2);
+  doc.line(margin, y, pageW - margin, y);
+  y += 4;
+  doc.setTextColor(153, 153, 153);
+  doc.setFontSize(6);
+  doc.text(`Manyata Travels  --  ${siteConfig.address.full}`, pageW / 2, y, { align: "center" });
+  y += 3;
+  doc.text(`Phone: +91 ${siteConfig.phone} | Email: ${siteConfig.email}`, pageW / 2, y, { align: "center" });
+
+  doc.save(`${pkg.slug}-itinerary.pdf`);
 }
