@@ -212,14 +212,16 @@ export default function PackageDetailClient({ pkg, whatsappUrl }: PackageDetailC
                     Call to Book
                   </a>
 
-                  {/* Download PDF — prints current page as PDF */}
-                  <button
-                    onClick={() => window.print()}
-                    className="no-print flex items-center justify-center gap-2 w-full bg-cream hover:bg-cream-dark text-primary py-4 rounded-xl text-base font-semibold transition-colors border border-primary/20 font-[var(--font-body)]"
+                  {/* Download PDF — opens clean print page */}
+                  <a
+                    href={`/packages/${pkg.slug}/print`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-cream hover:bg-cream-dark text-primary py-4 rounded-xl text-base font-semibold transition-colors border border-primary/20 font-[var(--font-body)]"
                   >
                     <Download className="w-5 h-5" />
                     Download Itinerary PDF
-                  </button>
+                  </a>
                 </div>
               </ScrollAnimation>
 
