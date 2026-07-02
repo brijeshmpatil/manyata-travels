@@ -52,29 +52,29 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
   doc.text(siteConfig.email, pageW - margin, y + 7, { align: "right" });
   doc.text(`${siteConfig.address.city}, ${siteConfig.address.state}`, pageW - margin, y + 11, { align: "right" });
 
-  y += 14;
+  y += 16;
   doc.setDrawColor(...teal);
   doc.setLineWidth(0.5);
   doc.line(margin, y, pageW - margin, y);
-  y += 7;
+  y += 10;
 
   // ============ TITLE ============
   doc.setTextColor(...teal);
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text(pkg.title, margin, y);
-  y += 5;
+  y += 6;
 
   doc.setTextColor(...gray);
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   doc.text(pkg.subtitle, margin, y);
-  y += 4;
+  y += 5;
 
   doc.setTextColor(...dark);
   doc.setFontSize(8);
   doc.text(`${pkg.duration}  |  ${pkg.destinations.length} Destinations  |  3-Star Hotels`, margin, y);
-  y += 5;
+  y += 7;
 
   // Destination tags
   let tagX = margin;
@@ -88,7 +88,7 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
     doc.text(dest, tagX + 4, y + 0.5);
     tagX += tw + 3;
   }
-  y += 7;
+  y += 10;
 
   // ============ PRICING ============
   if (pkg.pricingTiers && pkg.pricingTiers.length > 0) {
@@ -105,7 +105,7 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
       styles: { lineColor: lightGray, lineWidth: 0.2 },
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    y = (doc as any).lastAutoTable.finalY + 5;
+    y = (doc as any).lastAutoTable.finalY + 10;
   } else {
     doc.setTextColor(...gray);
     doc.setFontSize(8);
@@ -126,11 +126,11 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
   doc.text("Trip Highlights", margin, y);
-  y += 2;
+  y += 3;
   doc.setDrawColor(...lightGray);
   doc.setLineWidth(0.2);
   doc.line(margin, y, pageW - margin, y);
-  y += 6;
+  y += 8;
 
   tagX = margin;
   doc.setFontSize(7);
@@ -147,7 +147,7 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
     doc.text(h, tagX + 4, y + 0.5);
     tagX += tw + 3;
   }
-  y += 8;
+  y += 12;
 
   // ============ ITINERARY ============
   checkPage(10);
@@ -155,11 +155,11 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
   doc.text("Day-by-Day Itinerary", margin, y);
-  y += 2;
+  y += 3;
   doc.setDrawColor(...lightGray);
   doc.setLineWidth(0.2);
   doc.line(margin, y, pageW - margin, y);
-  y += 6;
+  y += 8;
 
   for (const day of pkg.itinerary) {
     doc.setFontSize(8);
@@ -205,7 +205,7 @@ export async function generateItineraryPDF(pkg: TravelPackage): Promise<void> {
     doc.setFont("helvetica", "normal");
     doc.text(descLines, margin + 6, y + 12);
 
-    y += cardH + 3;
+    y += cardH + 5;
   }
 
   // ============ INCLUSIONS / EXCLUSIONS ============
